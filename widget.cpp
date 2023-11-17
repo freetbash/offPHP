@@ -43,7 +43,7 @@ void opApp::initUI() {
     // TextEdit
     this->codeinput.setLineWrapMode(QTextEdit::WidgetWidth);
     this->codeinput.setAcceptRichText(false);
-    this->codeinput.setFont(QFont("Consolas", 8));
+    this->codeinput.setFont(QFont("Consolas", 14));
     this->codeinput.setPlainText(this->input_tip);
 
     this->output.setLineWrapMode(QTextEdit::WidgetWidth);
