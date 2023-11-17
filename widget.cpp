@@ -88,7 +88,6 @@ void opApp::initPHP() {
     for (QString phpversion: all_php) {
         QString php_exe = php_dir + "/" + phpversion +"/php.exe";
         this->phps.insert(phpversion, php_exe);
-        cout << php_exe.toStdString() << endl;
     }
 
     this->phpVersion.addItems(all_php);
@@ -138,7 +137,7 @@ void opApp::save_file() {
     QFile f(filename);
     f.open(QIODevice::WriteOnly | QIODevice::Text);
     QString content = this->codeinput.toPlainText();
-    f.write(content.toStdString().c_str());
+    f.write(content.toUtf8());
 
 }
 
@@ -168,11 +167,10 @@ void opApp::run_code() {
     QTextStream out(&f);
     out << content;
     f.close();
-    cout << content.toStdString() << endl;
 
     QString php = this->phps[this->phpVersion.currentText()];
     QString result = execute_phpcode(php, temp_php);
-    cout << result.toStdString() << endl;
+
     if (this->setHtml.isChecked()) {
         this->output.setHtml(result);
     } else {
@@ -200,9 +198,6 @@ QStringList GetDirNameList(const QString &strDirpath) {
 }
 
 QString execute_phpcode(QString php, QString temp_php) {
-    cout << "enter execute" << endl;
-    cout << php.toStdString() << endl;
-    cout << temp_php.toStdString() << endl;
 
     QProcess process;
     process.setProgram(php);
@@ -219,8 +214,8 @@ QString execute_phpcode(QString php, QString temp_php) {
     process.waitForFinished();
 
     // Read standard output and standard error
-    QString error = QString::fromStdString(process.readAllStandardError().toStdString());
-    QString output = QString::fromStdString(process.readAllStandardOutput().toStdString());
+    QString error =  QString::fromUtf8(process.readAllStandardError());
+    QString output = QString::fromUtf8(process.readAllStandardOutput());
 
     QString res = output;
     if (error.length() != 0 ) {

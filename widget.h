@@ -14,7 +14,7 @@
 class opApp: public QWidget {
 private:
     QString base_dir;
-    QString version = "0.0.1";
+    QString version = "0.1.0";
     QString input_tip = "<?php \necho \"hello word\";";
     // PHP5.6.1 C://qwec1//PHP5.6.1//bin//php.exe
     QMap<QString, QString> phps;
